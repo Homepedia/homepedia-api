@@ -6,7 +6,7 @@ type ScraperService struct {
 	scraper model.Scraper
 }
 
-func NewScrapperService(scraper model.Scraper) *ScraperService {
+func NewScraperService(scraper model.Scraper) *ScraperService {
 	return &ScraperService{
 		scraper: scraper,
 	}

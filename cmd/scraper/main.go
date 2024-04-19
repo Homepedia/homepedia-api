@@ -10,7 +10,7 @@ func main() {
 	fmt.Println("Scraper started...")
 
 	scraper := external.NewCollyScraper()
-	collyService := service.NewScrapperService(scraper)
+	collyService := service.NewScraperService(scraper)
 	data, err := collyService.FetchData("https://www.google.com")
 	if err != nil {
 		fmt.Println(err)

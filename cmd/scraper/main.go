@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"scrapper/internal/application/service"
-	"scrapper/internal/infrastructure/external"
+	"scraper/internal/application/service"
+	"scraper/internal/infrastructure/external"
 )
 
 func main() {
-	fmt.Println("Scrapper started...")
+	fmt.Println("Scraper started...")
 
-	scrapper := external.NewCollyScraper()
-	collyService := service.NewScrapperService(scrapper)
+	scraper := external.NewCollyScraper()
+	collyService := service.NewScrapperService(scraper)
 	data, err := collyService.FetchData("https://www.google.com")
 	if err != nil {
 		fmt.Println(err)

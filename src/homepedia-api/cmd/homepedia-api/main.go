@@ -2,22 +2,18 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+	"homepedia-api/internal/router"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
 	fmt.Print("Hello, World!")
-	e := echo.New()
+	echoInstance := echo.New()
 
-	// Routes
-	e.GET("/", hello)
-
+	// Router
+	authRouter := router.NewAuthRouter(echoInstance)
+	authRouter.Register()
 	// Start server
-	e.Logger.Fatal(e.Start(":1323"))
-}
-
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World! Please stant up")
+	echoInstance.Logger.Fatal(echoInstance.Start(":1323"))
 }

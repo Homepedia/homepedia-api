@@ -23,4 +23,9 @@
 hs_err_pid*
 replay_pid*
 
+# Exclude binary files
+
+/src/homepedia-api/tmp
+
+
 /vendor

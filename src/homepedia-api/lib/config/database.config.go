@@ -20,7 +20,6 @@ func Init() {
 	if err != nil {
 		panic("failed to init auth database connection")
 	}
-
 }
 
 func initAuthDatabase() (*gorm.DB, error) {

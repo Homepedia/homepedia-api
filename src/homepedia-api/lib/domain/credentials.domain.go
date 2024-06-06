@@ -1,4 +1,4 @@
-package auth_domain
+package domain
 
 import (
 	"time"
@@ -11,15 +11,14 @@ type Credentials struct {
 	Username  string    `gorm:"unique;not null"`
 	Password  string    `gorm:"not null"`
 	Email     string    `gorm:"unique;not null"`
-	RoleID    uint      `gorm:"not null"`
+	RoleID    uint      `gorm:"default:2;not null"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
 
 // NewCredentials is a constructor for Credentials with necessary initialization
-func NewCredentials(id uuid.UUID, username, password, email string, role uint) *Credentials {
+func NewCredentials(username, password, email string, role uint) *Credentials {
 	return &Credentials{
-		ID:       id,
 		Username: username,
 		Password: password,
 		Email:    email,

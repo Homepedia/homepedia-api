@@ -1,4 +1,4 @@
-package auth_domain
+package domain
 
 type Role struct {
 	ID   int    `gorm:"primary_key;autoIncrement"`

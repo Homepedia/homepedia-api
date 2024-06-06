@@ -2,7 +2,7 @@ package main
 
 import (
 	"homepedia-api/lib/config"
-	auth_domain "homepedia-api/lib/domain/auth"
+	"homepedia-api/lib/domain"
 
 	"github.com/joho/godotenv"
 )
@@ -16,15 +16,15 @@ func main() {
 	authDB := config.Connections.Auth
 
 	// Downgrade auth database
-	authDB.Migrator().DropTable(&auth_domain.Credentials{})
-	authDB.Migrator().DropTable(&auth_domain.Role{})
+	authDB.Migrator().DropTable(&domain.Credentials{})
+	authDB.Migrator().DropTable(&domain.Role{})
 
 	// Migrate auth database
-	authDB.AutoMigrate(&auth_domain.Credentials{})
-	authDB.AutoMigrate(&auth_domain.Role{})
+	authDB.AutoMigrate(&domain.Credentials{})
+	authDB.AutoMigrate(&domain.Role{})
 
 	// Generate seeds for roles
-	roles := []auth_domain.Role{
+	roles := []domain.Role{
 		{Name: "admin"},
 		{Name: "user"},
 	}

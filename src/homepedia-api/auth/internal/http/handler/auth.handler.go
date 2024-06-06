@@ -1,7 +1,7 @@
 package handler
 
 import (
-	helloUsecase "homepedia-api/auth/internal/usecase"
+	"homepedia-api/auth/internal/application/usecase"
 
 	"github.com/labstack/echo/v4"
 )
@@ -21,5 +21,5 @@ func NewAuthHandler(e *echo.Echo) AuthHandlerInterface {
 }
 
 func (ah *AuthHandler) Register() {
-	ah.EchoInstance.GET("/", helloUsecase.Execute)
+	ah.EchoInstance.POST("/auth/register", usecase.Execute)
 }

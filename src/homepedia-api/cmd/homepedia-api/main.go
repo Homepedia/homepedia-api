@@ -11,6 +11,7 @@ import (
 func main() {
 	godotenv.Load()
 	echoInstance := echo.New()
+	echoInstance.Validator = config.NewValidator()
 	// Init connections
 	config.Init()
 

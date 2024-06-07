@@ -7,3 +7,5 @@ type UserRegisterDTO struct {
 	Password string `json:"password" validate:"gte=8,lte=20,required"`
 	Email    string `json:"email" validate:"email,required"`
 }
+
+

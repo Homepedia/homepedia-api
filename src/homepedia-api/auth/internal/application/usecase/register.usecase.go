@@ -1,16 +1,16 @@
 package usecase
 
 import (
-	"fmt"
 	"homepedia-api/auth/internal/application/dto"
+	"homepedia-api/auth/internal/http/repository"
 	"homepedia-api/lib/domain"
+	"homepedia-api/lib/utils"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
-func Execute(c echo.Context) error {
-
+func RegisterExecute(c echo.Context) error {
 	var req dto.UserRegisterDTO
 
 	if err := c.Bind(&req); err != nil {
@@ -23,7 +23,14 @@ func Execute(c echo.Context) error {
 
 	credentials := domain.NewCredentials(req.Username, req.Password, req.Email, 2)
 
-	fmt.Println(credentials)
+	repository := repository.NewAuthRepository()
 
-	return c.String(http.StatusOK, "Hello, World! Please stand up")
+	createUser := repository.Register(credentials)
+
+	if !createUser.Success {
+		return c.JSON(http.StatusBadRequest, utils.HttpResponse{Message: createUser.Message})
+	}
+
+	return c.JSON(http.StatusCreated, utils.HttpResponse{Message: createUser.Message})
+
 }

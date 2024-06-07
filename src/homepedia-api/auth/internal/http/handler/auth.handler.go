@@ -21,5 +21,5 @@ func NewAuthHandler(e *echo.Echo) AuthHandlerInterface {
 }
 
 func (ah *AuthHandler) Register() {
-	ah.EchoInstance.POST("/auth/register", usecase.Execute)
+	ah.EchoInstance.POST("/auth/register", usecase.RegisterExecute)
 }

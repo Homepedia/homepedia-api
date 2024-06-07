@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"errors"
 	"homepedia-api/lib/config"
 	"homepedia-api/lib/domain"
 
@@ -13,6 +14,8 @@ const (
 	USER_CREATED             = "user created successfully"
 )
 
+var ErrUserNotFound = errors.New("user not found")
+
 type AuthRepositoryError struct {
 	Message string
 	Success bool
@@ -22,6 +25,7 @@ type AuthRepository interface {
 	// Register est une fonction pour enregistrer un nouvel utilisateur
 	Register(credentials *domain.Credentials) AuthRepositoryError
 	CheckUsernameOrEmail(username string, email string) AuthRepositoryError
+	FindUserByEmail(email string) (*domain.Credentials, error)
 	// TODO: Login est une fonction pour connecter un utilisateur
 }
 
@@ -80,4 +84,15 @@ func (r *authRepository) CheckUsernameOrEmail(username string, email string) Aut
 	return AuthRepositoryError{
 		Success: true,
 	}
+}
+
+func (r *authRepository) FindUserByEmail(email string) (*domain.Credentials, error) {
+	var credentials domain.Credentials
+	if err := r.db.Where("email = ?", email).First(&credentials).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrUserNotFound
+		}
+		return nil, err
+	}
+	return &credentials, nil
 }

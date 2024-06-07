@@ -24,7 +24,7 @@ func RegisterExecute(c echo.Context) error {
 
 	credentials := domain.NewCredentials(req.Username, req.Password, req.Email, 2)
 
-	repository := repository.NewAuthRepository()
+	authRepo := repository.NewAuthRepository()
 
 	hashPassword, err := service.HashPassword(credentials.Password)
 	if err != nil {
@@ -32,7 +32,7 @@ func RegisterExecute(c echo.Context) error {
 	}
 	credentials.Password = hashPassword
 
-	createUser := repository.Register(credentials)
+	createUser := authRepo.Register(credentials)
 
 	if !createUser.Success {
 		return c.JSON(http.StatusBadRequest, utils.HttpResponse{Message: createUser.Message})

@@ -4,6 +4,7 @@ import (
 	"homepedia-api/auth/internal/application/dto"
 	"homepedia-api/auth/internal/http/repository"
 	"homepedia-api/lib/domain"
+	"homepedia-api/lib/service"
 	"homepedia-api/lib/utils"
 	"net/http"
 
@@ -24,6 +25,12 @@ func RegisterExecute(c echo.Context) error {
 	credentials := domain.NewCredentials(req.Username, req.Password, req.Email, 2)
 
 	repository := repository.NewAuthRepository()
+
+	hashPassword, err := service.HashPassword(credentials.Password)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, utils.HttpResponse{Message: err.Error()})
+	}
+	credentials.Password = hashPassword
 
 	createUser := repository.Register(credentials)
 

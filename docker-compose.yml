@@ -8,5 +8,30 @@ services:
       POSTGRES_USER: homepedia
       POSTGRES_PASSWORD: epitech
       POSTGRES_DB: auth
+    volumes:
+      - db-data:/var/lib/postgresql/data
     ports:
       - "5434:5432"
+  dragonfly:
+    container_name: dragonfly
+    image: 'docker.dragonflydb.io/dragonflydb/dragonfly'
+    restart: unless-stopped
+    ulimits:
+      memlock: -1
+    volumes:
+      - dragonfly-data:/data
+    networks:
+      - app-network
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+    command: /bin/sh -c "dragonfly --requirepass epitech"
+
+volumes:
+  dragonfly-data:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge

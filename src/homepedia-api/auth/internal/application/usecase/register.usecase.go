@@ -14,11 +14,11 @@ func RegisterExecute(c echo.Context) error {
 	var req dto.UserRegisterDTO
 
 	if err := c.Bind(&req); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, utils.HttpResponse{Message: err.Error()})
 	}
 
 	if err := c.Validate(req); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+		return c.JSON(http.StatusBadRequest, utils.HttpResponse{Message: err.Error()})
 	}
 
 	credentials := domain.NewCredentials(req.Username, req.Password, req.Email, 2)

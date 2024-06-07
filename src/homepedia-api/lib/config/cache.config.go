@@ -25,3 +25,13 @@ func InitCache() {
 		log.Fatalf("Redis connection failed: %v", err)
 	}
 }
+
+func GetCache() *redis.Client {
+	return RedisClient
+}
+
+func CloseCache() {
+	_ = RedisClient.Close()
+}
+
+

@@ -77,7 +77,6 @@ func LoginExecute(c echo.Context) error {
 		Value:    sessionId,
 		Expires:  time.Now().Add(6 * time.Hour),
 		HttpOnly: true,
-		SameSite: http.SameSiteNoneMode,
 		Secure:   true,
 	}
 

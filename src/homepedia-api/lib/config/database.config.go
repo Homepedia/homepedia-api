@@ -9,21 +9,9 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-type DBConnection struct {
-	Auth *gorm.DB
-}
 
-var Connections DBConnection
 
-func Init() {
-	var err error
-	Connections.Auth, err = initAuthDatabase()
-	if err != nil {
-		panic("failed to init auth database connection")
-	}
-}
-
-func initAuthDatabase() (*gorm.DB, error) {
+func InitAuthDatabase() (*gorm.DB, error) {
 	host := os.Getenv("DB_HOST")
 	user := os.Getenv("POSTGRES_USER")
 	password := os.Getenv("POSTGRES_PASSWORD")

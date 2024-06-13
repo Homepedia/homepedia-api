@@ -23,6 +23,7 @@ type AuthCookiePayload struct {
 	UserId   string
 	Email    string
 	Username string
+	Role     uint
 }
 
 func LoginExecute(c echo.Context) error {
@@ -65,6 +66,7 @@ func LoginExecute(c echo.Context) error {
 		UserId:   credentials.ID.String(),
 		Email:    credentials.Email,
 		Username: credentials.Username,
+		Role:     credentials.RoleID,
 	}
 
 	sessionId, err := cache.CreateSessionId(payload, c)
@@ -77,7 +79,7 @@ func LoginExecute(c echo.Context) error {
 		Value:    sessionId,
 		Expires:  time.Now().Add(6 * time.Hour),
 		HttpOnly: true,
-		Secure:   true,
+		Path:     "/",
 	}
 
 	c.SetCookie(cookie)

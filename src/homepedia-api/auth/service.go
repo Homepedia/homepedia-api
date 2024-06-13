@@ -11,4 +11,6 @@ func InitService(echoInstance *echo.Echo) {
 	dbInstance := config.Connections.Auth
 	authRouter := router.NewAuthRouter(echoInstance, dbInstance)
 	authRouter.Register()
+	testRouter := router.NewTestRouter(echoInstance, dbInstance)
+	testRouter.Register()
 }

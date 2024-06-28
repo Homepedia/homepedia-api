@@ -12,6 +12,19 @@ services:
       - db-data:/var/lib/postgresql/data
     ports:
       - "5434:5432"
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    volumes:
+      - db-mongo:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
   dragonfly:
     container_name: dragonfly
     image: 'docker.dragonflydb.io/dragonflydb/dragonfly'
@@ -31,6 +44,7 @@ services:
 volumes:
   dragonfly-data:
   db-data:
+  db-mongo:
 
 networks:
   app-network:

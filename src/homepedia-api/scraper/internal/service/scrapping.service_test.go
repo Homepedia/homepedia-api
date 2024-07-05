@@ -8,7 +8,7 @@ import (
 
 func TestScrapeService(t *testing.T) {
 	userAgentList := []string{"Mozilla/5.0"}
-	key := "55-06"
+	key := "55-08"
 	url := "https://immobilier.lefigaro.fr/annonces/annonce-68152302.html"
 	res, err := ScrappePage(url, userAgentList, key)
 	assert.NoError(t, err)
@@ -20,10 +20,9 @@ func TestScrapeService(t *testing.T) {
 
 func TestScrapeServiceInvalidURL(t *testing.T) {
 	userAgentList := []string{"Mozilla/5.0"}
-	key := "55-06"
+	key := "44-06"
 	url := "https://immobilier.lefigaro.fr/annonces/invalid-url"
 	res, err := ScrappePage(url, userAgentList, key)
-
 	assert.Error(t, err)
 	assert.Nil(t, res)
 }

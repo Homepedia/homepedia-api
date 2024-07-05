@@ -2,12 +2,14 @@ package cron
 
 import (
 	"fmt"
-	"homepedia-api/scrapper/internal/domain"
-	"homepedia-api/scrapper/internal/service"
+	"homepedia-api/scraper/internal/domain"
+	"homepedia-api/scraper/internal/service"
 	"sync"
+
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func RunFigaroCron() {
+func RunFigaroCron(client *mongo.Client) {
 
 	var wg sync.WaitGroup
 	var mu sync.Mutex
@@ -125,7 +127,7 @@ func RunFigaroCron() {
 	for departement, departmentURL := range departments {
 		sem <- struct{}{} // Bloque si le canal est plein
 		wg.Add(1)
-		go service.ScrapeDepartment(departmentURL, departement, userAgentList, maxCount, &wg, &mu, &data, sem)
+		go service.ScrapeDepartment(departmentURL, departement, userAgentList, maxCount, &wg, &mu, &data, sem, client)
 	}
 
 	wg.Wait()

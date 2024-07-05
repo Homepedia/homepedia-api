@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"homepedia-api/lib/config"
-	"homepedia-api/scrapper"
+	scrapper "homepedia-api/scraper"
 
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
@@ -31,5 +31,5 @@ func main() {
 			panic(err)
 		}
 	}()
-	scrapper.InitService()
+	scrapper.InitService(client)
 }

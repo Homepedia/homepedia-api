@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-func RandomString(userAgentList []string) string {
+func RandomString(strings []string) string {
 	rand.Seed(time.Now().UnixNano())
-	randomIndex := rand.Intn(len(userAgentList))
-	return userAgentList[randomIndex]
+	randomIndex := rand.Intn(len(strings))
+	return strings[randomIndex]
 }

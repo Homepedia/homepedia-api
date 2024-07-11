@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"homepedia-api/lib/utils"
 	"homepedia-api/scraper/internal/domain"
+	"homepedia-api/scraper/internal/repository"
 	"log"
 	"regexp"
 	"strings"
@@ -153,22 +154,20 @@ func ScrapeDepartment(departmentURL, key string, userAgentList []string, maxCoun
 	log.Printf("Visiting department URL: %s\n", departmentURL)
 	c.Visit(departmentURL)
 	c.Wait()
-	res, _ := ScrappePage(links[0], userAgentList, key)
-	fmt.Println(res)
-	// for _, link := range links {
-	// 	res, err := ScrappePage(link, userAgentList, key)
-	// 	if err == nil {
-	// 		mu.Lock()
-	// 		*data = append(*data, *res)
-	// 		mu.Unlock()
-	// 	} else {
-	// 		log.Printf("Error scraping URL %s: %v\n", link, err)
-	// 	}
-	// }
+	for _, link := range links {
+		res, err := ScrappePage(link, userAgentList, key)
+		if err == nil {
+			mu.Lock()
+			*data = append(*data, *res)
+			mu.Unlock()
+		} else {
+			log.Printf("Error scraping URL %s: %v\n", link, err)
+		}
+	}
 
-	// log.Printf("Finished scrapping department: %s\n", departmentURL)
-	// repository := repository.NEewArticleRepository(client)
-	// repository.InsertMany(data)
+	log.Printf("Finished scrapping department: %s\n", departmentURL)
+	repository := repository.NEewArticleRepository(client)
+	repository.InsertMany(data)
 
 	<-sem
 }
